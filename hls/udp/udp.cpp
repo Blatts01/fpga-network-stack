@@ -24,7 +24,7 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "fns_config.hpp"
+#include "../fns_config.hpp"
 #include "udp.hpp"
 
 template <int WIDTH>
@@ -199,7 +199,7 @@ void merge_rx_meta(	stream<ipMeta>&		ipMetaIn,
 template <int WIDTH>
 
 // Renamed from udp_core to just udp
-void udp(		hls::stream<ipMeta>&		s_axis_rx_meta,
+void udp_core(		hls::stream<ipMeta>&		s_axis_rx_meta,
 				hls::stream<net_axis<WIDTH> >&	s_axis_rx_data,
 				hls::stream<ipUdpMeta>&	m_axis_rx_meta,
 				hls::stream<net_axis<WIDTH> >&	m_axis_rx_data,
@@ -246,7 +246,7 @@ void udp(		hls::stream<ipMeta>&		s_axis_rx_meta,
 }
 
 // renamed from udp to udp_top
-void udp_top(
+void udp(
 	hls::stream<ipMeta>&		s_axis_rx_meta,
 	hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	s_axis_rx_data,
 	hls::stream<ipUdpMeta>&	m_axis_rx_meta,
@@ -298,7 +298,7 @@ void udp_top(
 							m_axis_tx_data);
 
     // Renamed from udp_core to just udp
-   	udp<DATA_WIDTH>(s_axis_rx_meta,
+   	udp_core<DATA_WIDTH>(s_axis_rx_meta,
                    s_axis_rx_data_internal,
                    m_axis_rx_meta,
                    m_axis_rx_data_internal,

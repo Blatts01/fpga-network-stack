@@ -24,13 +24,13 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#include "rocev2_config.hpp"
+#include "../fns_config.hpp"
 #include "rocev2.hpp"
 
 template <int WIDTH>
 void rocev2(
 	hls::stream<net_axis<WIDTH> >& s_axis_rx_data,
-	hls::stream<net_axis<WIDTH> >&	m_axis_tx_data,
+	hls::stream<net_axis<WIDTH> >& m_axis_tx_data,
 				
 	// S(R)Q
 	hls::stream<txMeta>& s_axis_sq_meta,
@@ -55,9 +55,9 @@ void rocev2(
 #endif
 	ap_uint<32>& regCrcDropPkgCount,
 	ap_uint<32>& regInvalidPsnDropCount,
-    ap_uint<32>& regRetransCount,
+  ap_uint<32>& regRetransCount,
 	ap_uint<32>& regIbvCountRx,
-    ap_uint<32>& regIbvCountTx
+  ap_uint<32>& regIbvCountTx
 ) {
 #pragma HLS INLINE
 
@@ -79,7 +79,6 @@ void rocev2(
 
 	static stream<ipMeta>	rx_ip2udpMetaFifo("rx_ip2udpMetaFifo");
 	static stream<net_axis<WIDTH> >	rx_ip2udpFifo("rx_ip2udpFifo");
-	//static stream<net_axis<WIDTH> >	rx_ip2udpFifo("rx_ip2udpFifo");
 	static stream<ipMeta>	tx_udp2ipMetaFifo("tx_udp2ipMetaFifo");
 	static stream<net_axis<WIDTH> >	tx_udp2ipFifo("tx_udp2ipFifo");
 	#pragma HLS STREAM depth=2 variable=rx_ip2udpMetaFifo
@@ -161,9 +160,9 @@ void rocev2(
 		m_axis_dbg,
 #endif
 		regInvalidPsnDropCount,
-        regRetransCount,
+    regRetransCount,
 		regIbvCountRx,
-        regIbvCountTx
+    regIbvCountTx
 	);
     
 }
@@ -305,9 +304,9 @@ void rocev2_top(
 #endif 
 	ap_uint<32>& regCrcDropPkgCount,
 	ap_uint<32>& regInvalidPsnDropCount,
-    ap_uint<32>& regRetransCount,
+  ap_uint<32>& regRetransCount,
 	ap_uint<32>& regIbvCountRx,
-    ap_uint<32>& regIbvCountTx
+  ap_uint<32>& regIbvCountTx
 ) {
 	#pragma HLS DATAFLOW disable_start_propagation
 	#pragma HLS INTERFACE ap_ctrl_none port=return
@@ -369,9 +368,9 @@ void rocev2_top(
 #endif 
 		regCrcDropPkgCount,
 		regInvalidPsnDropCount,
-        regRetransCount,
+    regRetransCount,
 		regIbvCountRx,
-        regIbvCountTx
+    regIbvCountTx
 );
 #endif
 

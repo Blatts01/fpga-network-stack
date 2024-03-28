@@ -72,7 +72,7 @@ find_path(Vitis_HLS_INCLUDE_DIR hls_stream.h PATHS
           NO_DEFAULT_PATH)
 mark_as_advanced(Vitis_HLS_INCLUDE_DIR)
 
-if(Vitis_VPP OR (Vitis_MAJOR_VERSION GREATER 2018) OR
+if(Vitis_VPP OR (Vitis_MAJOR_VERSION GREATER 2023) OR
    (Vitis_MAJOR_VERSION EQUAL 2018 AND Vitis_MINOR_VERSION GREATER 2))
   set(VITIS_USE_XRT TRUE)
 else()

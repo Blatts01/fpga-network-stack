@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.0)
 
 project(ipv4
-        VERSION 0.1)
+        VERSION 0.2)
 
 # Target options
 set(FNS_PLATFORM_PART "xcu55c-fsvh2892-2L-e" CACHE STRING "FPGA platform part")
@@ -16,13 +16,14 @@ find_package(Vitis REQUIRED)
 
 add_vitis_ip(${PROJECT_NAME}
                  FILES
+                    "../fns_config.hpp"
                     "../packet.hpp"
                     "../axi_utils.hpp"
                     "ipv4.cpp"
                     "ipv4.hpp"
                     "ipv4_utils.cpp"
                  HLS_FLAGS
-                    "-DFNS_DATA_WIDTH=${FNS_DATA_WIDTH}"
+                    "-DFNS_DATA_WIDTH=${FNS_DATA_WIDTH} -DFNS_ROCE_STACK_MAX_QPS=${FNS_ROCE_STACK_MAX_QPS}"
                  PLATFORM_PART ${FNS_PLATFORM_PART}
                  VENDOR "ethz.systems.fpga"
                  DISPLAY_NAME "IPv4"

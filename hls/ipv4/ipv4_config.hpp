@@ -1,3 +1,3 @@
 #pragma once
 
-const unsigned DATA_WIDTH = ${DATA_WIDTH} * 8;
+const unsigned DATA_WIDTH = FNS_DATA_WIDTH;

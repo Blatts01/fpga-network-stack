@@ -26,6 +26,7 @@
  */
 #pragma once
 
+#include "../fns_config.hpp"
 #include "../axi_utils.hpp"
 #include "../packet.hpp"
 
@@ -668,7 +669,7 @@ public:
 
 // Renamed from ipv4_core to just ipv4
 template <int WIDTH>
-void ipv4(	hls::stream<net_axis<WIDTH> >&	s_axis_rx_data,
+void ipv4_core(	hls::stream<net_axis<WIDTH> >&	s_axis_rx_data,
 			hls::stream<ipv4Meta>&	m_axis_rx_meta,
 			hls::stream<net_axis<WIDTH> >&	m_axis_rx_data,
 			hls::stream<ipv4Meta>&	s_axis_tx_meta,
@@ -676,3 +677,12 @@ void ipv4(	hls::stream<net_axis<WIDTH> >&	s_axis_rx_data,
 			hls::stream<net_axis<WIDTH> >&	m_axis_tx_data,
 			ap_uint<32>			local_ipv4_address,
 			ap_uint<8>			protocol);
+
+void ipv4(		hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	s_axis_rx_data,
+				hls::stream<ipv4Meta>&		m_axis_rx_meta,
+				hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	m_axis_rx_data,
+				hls::stream<ipv4Meta>&		s_axis_tx_meta,
+				hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	s_axis_tx_data,
+				hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	m_axis_tx_data,
+				ap_uint<32>			local_ipv4_address,
+				ap_uint<8>			protocol);

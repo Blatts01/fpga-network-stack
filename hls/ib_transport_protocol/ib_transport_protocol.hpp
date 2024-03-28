@@ -33,7 +33,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "../packet.hpp"
 #include "../ipv6/ipv6.hpp"
 #include "../udp/udp.hpp"
-#include "rocev2_config.hpp"
+#include "../fns_config.hpp"
 
 using namespace hls;
 
@@ -656,7 +656,7 @@ void ib_transport_protocol(
 	hls::stream<psnPkg>& m_axis_dbg_0, 
 #endif
 	ap_uint<32>& regInvalidPsnDropCount,
-    ap_uint<32>& regRetransCount,
+  ap_uint<32>& regRetransCount,
 	ap_uint<32>& regIbvCountRx,
-    ap_uint<32>& regIbvCountTx
+  ap_uint<32>& regIbvCountTx
 );

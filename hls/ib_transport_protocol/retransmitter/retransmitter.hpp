@@ -283,7 +283,7 @@ void retrans_meta_table(stream<retransMetaReq>&		meta_upd_req,
 template <int INSTID = 0>
 void process_retransmissions(
 	stream<retransUpdate>&	        rx2retrans_upd,
-    stream<retransRdInit>&          retrans2rx_init,
+  stream<retransRdInit>&          retrans2rx_init,
 	stream<retransmission>&         rx2retrans_req,
 	stream<retransmission>&         timer2retrans_req,
 	stream<retransEntry>&	        tx2retrans_insertRequest,
@@ -565,7 +565,7 @@ void freelist_handler(	stream<ap_uint<16> >& rt_releaseFifo,
 template <int INSTID = 0>
 void retransmitter(	
 	stream<retransUpdate>&	rx2retrans_upd,
-    stream<retransRdInit>&  retrans2rx_init,
+  stream<retransRdInit>&  retrans2rx_init,
 	stream<retransmission>& rx2retrans_req,
 	stream<retransmission>& timer2retrans_req,
 	stream<retransEntry>&	tx2retrans_insertRequest,
@@ -601,7 +601,7 @@ void retransmitter(
 
 	process_retransmissions<INSTID>(
 		rx2retrans_upd,
-        retrans2rx_init,
+    retrans2rx_init,
 		rx2retrans_req,
 		timer2retrans_req,
 		tx2retrans_insertRequest,

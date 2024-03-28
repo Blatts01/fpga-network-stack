@@ -107,3 +107,11 @@ void ipv6_core(	stream<net_axis<WIDTH> >&	s_axis_rx_data,
 			stream<net_axis<WIDTH> >&	s_axis_tx_data,
 			stream<net_axis<WIDTH> >&	m_axis_tx_data,
 			ap_uint<128>		reg_ip_address);
+
+void ipv6(	hls::stream<net_axis<DATA_WIDTH> >&	s_axis_rx_data,
+					hls::stream<ipv6Meta>&	m_axis_rx_meta,
+					hls::stream<net_axis<DATA_WIDTH> >&	m_axis_rx_data,
+					hls::stream<ipv6Meta>&	s_axis_tx_meta,
+					hls::stream<net_axis<DATA_WIDTH> >&	s_axis_tx_data,
+					hls::stream<net_axis<DATA_WIDTH> >&	m_axis_tx_data,
+					ap_uint<128>		reg_ip_address);

@@ -112,7 +112,7 @@ public:
 template <int WIDTH>
 
 // Renamed from udp_core to just udp
-void udp(		hls::stream<ipMeta>&		s_axis_rx_meta,
+void udp_core(		hls::stream<ipMeta>&		s_axis_rx_meta,
 				hls::stream<net_axis<WIDTH> >&	s_axis_rx_data,
 				hls::stream<ipUdpMeta>&	m_axis_rx_meta,
 				hls::stream<net_axis<WIDTH> >&	m_axis_rx_data,
@@ -122,5 +122,18 @@ void udp(		hls::stream<ipMeta>&		s_axis_rx_meta,
 				hls::stream<net_axis<WIDTH> >&	m_axis_tx_data,
 				ap_uint<128>		reg_ip_address,
 				ap_uint<16>			reg_listen_port);
+
+
+void udp(
+	hls::stream<ipMeta>&		s_axis_rx_meta,
+	hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	s_axis_rx_data,
+	hls::stream<ipUdpMeta>&	m_axis_rx_meta,
+	hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	m_axis_rx_data,
+	hls::stream<ipUdpMeta>&	s_axis_tx_meta,
+	hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	s_axis_tx_data,
+	hls::stream<ipMeta>&		m_axis_tx_meta,
+	hls::stream<ap_axiu<DATA_WIDTH, 0, 0, 0> >&	m_axis_tx_data,
+	ap_uint<128>		reg_ip_address,
+	ap_uint<16>			reg_listen_port);
 
 #endif

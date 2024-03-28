@@ -33,9 +33,7 @@
 #include "../ipv4/ipv4.hpp"
 #include "../ipv6/ipv6.hpp"
 #include "../udp/udp.hpp"
-#include "../crc/crc.hpp"
 #include "../ib_transport_protocol/ib_transport_protocol.hpp"
-//#include "../pointer_chasing/pointer_chasing.hpp"
 
 #if IP_VERSION == 6
 typedef ipv6Meta ipMeta;
@@ -71,8 +69,8 @@ void rocev2(
 #endif 
 	ap_uint<32>& regCrcDropPkgCount,
 	ap_uint<32>& regInvalidPsnDropCount,
-    ap_uint<32>& regRetransCount,
+  ap_uint<32>& regRetransCount,
 	ap_uint<32>& regIbvCountRx,
-    ap_uint<32>& regIbvCountTx
+  ap_uint<32>& regIbvCountTx
 );
 

@@ -28,7 +28,7 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ************************************************/
 
 #include "ib_transport_protocol.hpp"
-#include <rocev2_config.hpp>
+#include "../fns_config.hpp"
 #include "conn_table.hpp"
 #include "state_table.hpp"
 #include "msn_table.hpp"
@@ -2783,7 +2783,7 @@ void ib_transport_protocol(
 	static stream<rxTimerUpdate> rxClearTimer_req("rxClearTimer_req");
 	static stream<ap_uint<24> > txSetTimer_req("txSetTimer_req");
 	static stream<retransUpdate> rx2retrans_upd("rx2retrans_upd");
-    static stream<retransRdInit> retrans2rx_init("retrans2rx_init");
+  static stream<retransRdInit> retrans2rx_init("retrans2rx_init");
 	static stream<retransmission> rx2retrans_req("rx2retrans_req");
 	static stream<retransmission> timer2retrans_req("timer2retrans_req");
 	static stream<retransMeta> tx2retrans_insertMeta("tx2retrans_insertMeta");
@@ -2793,7 +2793,7 @@ void ib_transport_protocol(
 	#pragma HLS STREAM depth=2 variable=rxClearTimer_req
 	#pragma HLS STREAM depth=2 variable=txSetTimer_req
 	#pragma HLS STREAM depth=2 variable=rx2retrans_upd
-    #pragma HLS STREAM depth=16 variable=retrans2rx_init
+  #pragma HLS STREAM depth=16 variable=retrans2rx_init
 	#pragma HLS STREAM depth=2 variable=rx2retrans_req
 	#pragma HLS STREAM depth=2 variable=timer2retrans_req
 	#pragma HLS STREAM depth=2 variable=tx2retrans_insertMeta
@@ -2845,7 +2845,7 @@ void ib_transport_protocol(
 		regIbvCountRx
 	);
 
-	rshiftWordByOctet<net_axis<WIDTH>, WIDTH,11, INSTID>(((BTH_SIZE%WIDTH)/8), rx_ibh2shiftFifo, rx_shift2exhFifo);
+	roce_rshiftWordByOctet<net_axis<WIDTH>, WIDTH,11>(((BTH_SIZE%WIDTH)/8), rx_ibh2shiftFifo, rx_shift2exhFifo);
 
 	rx_process_exh<WIDTH, INSTID>(
 		rx_shift2exhFifo,
@@ -2931,10 +2931,10 @@ void ib_transport_protocol(
 	// RETH: 16 bytes
 	//TODO not required for AXI_WIDTH == 64, also this seems to have a bug, this goes together with the hack in process_exh where we don't write the first word out
 //#if AXI_WIDTH != 64
-	rshiftWordByOctet<net_axis<WIDTH>, WIDTH,12, INSTID>(((RETH_SIZE%WIDTH)/8), rx_exh2rethShiftFifo, rx_rethSift2mergerFifo);
+	roce_rshiftWordByOctet<net_axis<WIDTH>, WIDTH,12>(((RETH_SIZE%WIDTH)/8), rx_exh2rethShiftFifo, rx_rethSift2mergerFifo);
 //#endif
 	// AETH: 4 bytes
-	rshiftWordByOctet<net_axis<WIDTH>, WIDTH,13, INSTID>(((AETH_SIZE%WIDTH)/8), rx_exh2aethShiftFifo, rx_aethSift2mergerFifo);
+	roce_rshiftWordByOctet<net_axis<WIDTH>, WIDTH,13>(((AETH_SIZE%WIDTH)/8), rx_exh2aethShiftFifo, rx_aethSift2mergerFifo);
 
 	merge_rx_pkgs<WIDTH, INSTID>(rx_pkgShiftTypeFifo, rx_aethSift2mergerFifo, rx_rethSift2mergerFifo, rx_exhNoShiftFifo, m_axis_mem_write_data);
 
@@ -2981,9 +2981,9 @@ void ib_transport_protocol(
 	meta_merger<INSTID>(rx_ackEventFifo, rx_readEvenFifo, tx_appMetaFifo, tx_ibhconnTable_req, tx_ibhMetaFifo, tx_exhMetaFifo);
 
 	//Shift playload by 4 bytes for AETH (data from memory)
-	lshiftWordByOctet<WIDTH,12,INSTID>(((AETH_SIZE%WIDTH)/8), tx_split2aethShift, tx_aethShift2payFifo);
+	roce_lshiftWordByOctet<WIDTH,12>(((AETH_SIZE%WIDTH)/8), tx_split2aethShift, tx_aethShift2payFifo);
 	//Shift payload another 12 bytes for RETH (data from application)
-	lshiftWordByOctet<WIDTH,13,INSTID>(((RETH_SIZE%WIDTH)/8), tx_rethMerge2rethShift, tx_rethShift2payFifo);
+	roce_lshiftWordByOctet<WIDTH,13>(((RETH_SIZE%WIDTH)/8), tx_rethMerge2rethShift, tx_rethShift2payFifo);
 
 	//Generate EXH
 	generate_exh<WIDTH, INSTID>(	
@@ -3003,7 +3003,7 @@ void ib_transport_protocol(
 	append_payload<WIDTH, INSTID>(tx_packetInfoFifo, tx_exh2payFifo, tx_aethShift2payFifo, tx_rethShift2payFifo, tx_rawPayFifo, tx_exh2shiftFifo);
 
 	// BTH: 12 bytes
-	lshiftWordByOctet<WIDTH,11,INSTID>(((BTH_SIZE%WIDTH)/8), tx_exh2shiftFifo, tx_shift2ibhFifo);
+	roce_lshiftWordByOctet<WIDTH,11>(((BTH_SIZE%WIDTH)/8), tx_exh2shiftFifo, tx_shift2ibhFifo);
 	generate_ibh<WIDTH, INSTID>(	
 		tx_ibhMetaFifo,
 		tx_dstQpFifo,
@@ -3083,7 +3083,7 @@ void ib_transport_protocol(
 
 	retransmitter<INSTID>(	
 		rx2retrans_upd,
-        retrans2rx_init,
+    retrans2rx_init,
 		rx2retrans_req,
 		timer2retrans_req,
 		tx2retrans_insertRequest,
